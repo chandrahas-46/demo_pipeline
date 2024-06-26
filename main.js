@@ -10,6 +10,6 @@ app.get('/', (req, res) => {
 
 //server listening
 app.listen(PORT, (err) => {
-    if(err) console.log("server error on port 3000");
+    if(err) console.log("server error on port 8000");
     console.log(`Server is running on PORT: ${PORT}`);
 })
