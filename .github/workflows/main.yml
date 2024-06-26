@@ -20,10 +20,10 @@ jobs:
       # - run: node main.js &
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-      - run: docker build -t chandrahas17/CICD .
-      - run: docker tag chandrahas17/CICD chandrahas17/CICD:latest
-      - run: docker push chandrahas17/CICD:latest
-      - run: docker run -d -p 8000:8000 chandrahas17/CICD
+      - run: docker build -t chandrahas17/cicd .
+      - run: docker tag chandrahas17/cicd chandrahas17/CICD:latest
+      - run: docker push chandrahas17/cicd:latest
+      - run: docker run -d -p 8000:8000 chandrahas17/cicd
       - name: Wait for server to start
         run: |
           sleep 100
