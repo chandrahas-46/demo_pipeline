@@ -5,7 +5,7 @@ const PORT=process.env.PORT || 8000;
 // app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.json({msg: "Welcome to Azure Pipeline!"});
+    res.json({msg: "Welcome to CI CD Pipeline!"});
 })
 
 //server listening
