@@ -17,11 +17,18 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: npm install
-      - run: node main.js &
+      # - run: node main.js &
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - run: docker build -t chandrahas17/CICD .
+      - run: docker tag chandrahas17/CICD chandrahas17/CICD:latest
+      - run: docker push chandrahas17/CICD:latest
+      - run: docker run -d -p 8000:8000 chandrahas17/CICD
       - name: Wait for server to start
         run: |
-          sleep 10
+          sleep 100
           curl -v http://localhost:8000
+      # - run: node main.js &
 
 
 
