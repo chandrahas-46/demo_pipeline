@@ -6,34 +6,44 @@ on:
       - main  # Change this to your deployment branch if different
 
 jobs:
-  build:
+  build-node: 
     runs-on: ubuntu-latest
-
+    container: node:16
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - run: node --version
+      - run: npm --version
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: node main.js
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+  # build:
+  #   runs-on: ubuntu-latest
 
-    - name: Install dependencies
-      run: npm install
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
+
+  #   - name: Set up Node.js
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: '18'
+
+  #   - name: Install dependencies
+  #     run: npm install
 
     # - name: Run tests
     #   run: npm test
 
-    - name: Build project
-      run: npm run build
+    # - name: Build project
+    #   run: npm run build
 
-    - name: Deploy to Server
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
-        SERVER_HOST: ${{ secrets.SERVER_HOST }}
-        SERVER_PATH: ${{ secrets.SERVER_PATH }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" | ssh-add -
-        ssh -o StrictHostKeyChecking=no $SERVER_USERNAME@$SERVER_HOST "mkdir -p $SERVER_PATH"
-        rsync -avz --delete-after ./ $SERVER_USERNAME@$SERVER_HOST:$SERVER_PATH
+    # - name: Deploy to Server
+    #   env:
+    #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    #     SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
+    #     SERVER_HOST: ${{ secrets.SERVER_HOST }}
+    #     SERVER_PATH: ${{ secrets.SERVER_PATH }}
+    #   run: |
+    #     echo "$SSH_PRIVATE_KEY" | ssh-add -
+    #     ssh -o StrictHostKeyChecking=no $SERVER_USERNAME@$SERVER_HOST "mkdir -p $SERVER_PATH"
+    #     rsync -avz --delete-after ./ $SERVER_USERNAME@$SERVER_HOST:$SERVER_PATH
